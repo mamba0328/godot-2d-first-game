@@ -19,11 +19,6 @@ func exit_screen() -> void:
 	print("exited")
 
 
-func handle_bullet_collision(body: Node) -> void:
+func handle_bullet_collision() -> void:
 	print("kill")
 	queue_free() # Mob disappears after being hit.
-
-
-func _on_body_entered(body: Node) -> void:
-	print("123")
-	pass # Replace with function body.

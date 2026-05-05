@@ -9,20 +9,17 @@ var score = 0
 func _ready() -> void:
 	#Handle Signals
 	$Player.hit.connect(game_over)
-	$StartTimer.timeout.connect(game_start)
-	$ScoreTimer.timeout.connect(increase_score)
-	$MobTimer.timeout.connect(spawn_mob)
+	$Timers/StartTimer.timeout.connect(game_start)
+	$Timers/ScoreTimer.timeout.connect(increase_score)
+	$Timers/MobTimer.timeout.connect(spawn_mob)
+	$Timers/ShootTimer.timeout.connect(shoot)
 	$HUD.start_game.connect(new_game)
 	print("connected")
-	
-func _process(delta: float) -> void: 
-	if Input.is_action_pressed("shoot"):
-		shoot()
-
 
 func game_over() -> void:
-	$ScoreTimer.stop()
-	$MobTimer.stop()
+	$Timers/ScoreTimer.stop()
+	$Timers/MobTimer.stop()
+	$Timers/ShootTimer.stop()
 	$HUD.show_game_over()
 	
 	$BgMusic.stop()
@@ -36,7 +33,8 @@ func new_game() -> void:
 	#Reset game state
 	score = 0
 	$Player.start($StartPosition.position)
-	$StartTimer.start()
+	$Timers/StartTimer.start()
+
 	
 	#Clear all mobs
 	get_tree().call_group("mobs", "queue_free")
@@ -46,8 +44,9 @@ func new_game() -> void:
 	$HUD.show_message("Get Ready")
 
 func game_start() -> void:
-	$MobTimer.start()
-	$ScoreTimer.start()
+	$Timers/MobTimer.start()
+	$Timers/ScoreTimer.start()
+	$Timers/ShootTimer.start()
 	
 func increase_score() -> void:
 	score += 1
@@ -82,7 +81,7 @@ func shoot() -> void:
 	# Create a new instance of the projectile scene.
 	var projectile = projectile_scene.instantiate()
 
-	projectile.position = $Player.position - Vector2(50, 0)
-	projectile.rotation = $Player.rotation
+	projectile.position = $Player.position + Vector2.from_angle($Player.current_direction) * 25
+	projectile.rotation = $Player.current_direction
 
 	add_child(projectile)

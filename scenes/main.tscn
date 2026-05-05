@@ -47,15 +47,6 @@ color = Color(0.31764707, 0.47843137, 1, 1)
 
 [node name="HUD" parent="." unique_id=1350671752 instance=ExtResource("4_1bvp3")]
 
-[node name="MobTimer" type="Timer" parent="." unique_id=1605993590]
-wait_time = 0.5
-
-[node name="StartTimer" type="Timer" parent="." unique_id=1319338941]
-wait_time = 2.0
-one_shot = true
-
-[node name="ScoreTimer" type="Timer" parent="." unique_id=324971666]
-
 [node name="StartPosition" type="Marker2D" parent="." unique_id=1000128963]
 position = Vector2(240, 450)
 
@@ -76,3 +67,16 @@ area_mask = 4225
 visible = false
 stream = ExtResource("5_lquwl")
 volume_db = -80.0
+
+[node name="Timers" type="Node" parent="." unique_id=511343662]
+
+[node name="ShootTimer" type="Timer" parent="Timers" unique_id=619332691]
+
+[node name="MobTimer" type="Timer" parent="Timers" unique_id=1605993590]
+wait_time = 0.5
+
+[node name="StartTimer" type="Timer" parent="Timers" unique_id=1319338941]
+wait_time = 2.0
+one_shot = true
+
+[node name="ScoreTimer" type="Timer" parent="Timers" unique_id=324971666]
